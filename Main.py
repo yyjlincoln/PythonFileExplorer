@@ -27,11 +27,6 @@ def analysis(Path=None):
             Dirinfo[Path]['Dir'].append(x)
         elif os.path.isfile(TempPath):
             Dirinfo[Path]['File'].append(x)
-        #文件分类
-    #print('在'+Path+'中发现'+str(len(Dirinfo[Path]['Dir']))+'个目录,'+str(len(Dirinfo[Path]['File']))+'个文件')
-        #对于找到的子目录,进行同样的操作(也就是说 对于找到的子目录的子目录也会递归 子目录的子目录的子目录......)
-#加载文件夹
-#主程序
 Unchanged=False
 def explore():
     global y
@@ -41,9 +36,11 @@ def explore():
     global Root
     if Unchanged==False:
         Root=Pathx
-    Pathx=str(input('>'))
+    Pathx=str(input('>'))       
     if Pathx=='.':
         Pathx,tmp=os.path.split(Root)
+        if Pathx=='':
+            Pathx=Root
         print(Pathx)
         analysis(Pathx)
         show()
@@ -56,7 +53,7 @@ def explore():
         else:
             Pathx=os.path.join(Root,Dirinfo[Root]['Dir'][int(Pathx)-1])
     except:
-        print('Error Occured.')
+            print('Error Occured.')
     if Unchanged==False:
         analysis(Pathx)
         show()
@@ -80,7 +77,6 @@ if not os.path.exists(Pathx):
 else:
     analysis(Pathx)
     print('SuExplorer:'+Pathx)
-    print(Dirinfo)
     for x in range(len(Dirinfo[Pathx]['Dir'])):
         print(str(x+1)+':'+Dirinfo[Pathx]['Dir'][x]+'\\')
         y=x+1
